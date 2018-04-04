@@ -1,17 +1,70 @@
-1.Registration​ ​ and​ ​ Login​ ​ for​ ​ Users, social media login
+	BOARD
+	TASK LISTS
+	TASKS(assigned to participants added by Owner)
 
-2.Create task list. Reorder tasks in task list. Move tasks from one list to another
+Board page--
 
-3.Tag tasks as complete, incomplete, active
+my page--
 
-4.Tasks can have comments, start date, end date and can be assigned to some person
 
-5.Prioritize tasks(can be denoted by change of colors)
 
-## 6. Multiple access levels, allowing people to act as owner, participant or viewer in the task-list
 
-7.User profile page, users can add their profile pic, profile page of users can show how many
-task-lists they are part of, how many tasks they have successfully completed etc
+Owner and participants can add viewers
+Only owner can add participants(subject to change)
+
+### people can search for tasks and request to be added as viewer or participant (request will be diplayed on the board page)
+### blocked list of annoying people on trello
+
+owner and participants can create tasks
+owner can kickout participants
+
+
+
+#### features of one task:
+1. Name of the task
+2. Description of task + comments
+3. participants involved in that task
+4. start date ,when is the deadline
+5. the group/list/board to which the task belongs(like a certain event has multiple tasks assigned to different members)
+6. status of that task
+
+++7.who made the task
+
+#### features of board---
+
+
+#### signup-
+name, username(which should be unique),email(unique), password ,retype password
+Followed by email verification
+
+
+
+1. Registration​ ​ and​ ​ Login​ ​ for​ ​ Users, !!social media login
+
+((( 
+
+2. Create task list. $ each task will display name of task, participants,
+   Reorder tasks in task list .$ NOT YET DECIDED
+   Move tasks from one list to another.$ that is just changing its status from -to be done, -doing and -done
+
+3. Tag tasks as complete, incomplete, active
+
+4. Tasks can have comments, start date, end date and can be assigned to some person
+
+5. Prioritize tasks(can be denoted by change of colors)
+
+
+))))
+
+6. Multiple access levels, allowing people to act as owner, participant or viewer in the task-list
+OWNER -
+PARTICIPANT -
+VIEWER - viewer can only see the tasks on the board
+
+7.User profile page:
+---- users can add their profile pic,
+---- profile page of users can show how many task-lists they are part of,
+---- how many tasks they have successfully completed etc
 
 8.Search by title or tags # chapter 16 in the blog tutorial 
 
@@ -19,6 +72,10 @@ task-lists they are part of, how many tasks they have successfully completed etc
 been completed
 
 (6 marks for each feature)
+EXTRA FEATURES--
+10. change name  ,profile pic ,email id,password
+
+
 
 Tutorials online-
 https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
