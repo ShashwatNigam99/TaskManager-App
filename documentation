@@ -1,0 +1,25 @@
+1.Registration​ ​ and​ ​ Login​ ​ for​ ​ Users, social media login
+
+2.Create task list. Reorder tasks in task list. Move tasks from one list to another
+
+3.Tag tasks as complete, incomplete, active
+
+4.Tasks can have comments, start date, end date and can be assigned to some person
+
+5.Prioritize tasks(can be denoted by change of colors)
+
+## 6. Multiple access levels, allowing people to act as owner, participant or viewer in the task-list
+
+7.User profile page, users can add their profile pic, profile page of users can show how many
+task-lists they are part of, how many tasks they have successfully completed etc
+
+8.Search by title or tags # chapter 16 in the blog tutorial 
+
+9.Task Dependency: a task cannot be completed/deleted till the tasks on which it depends have
+been completed
+
+(6 marks for each feature)
+
+Tutorials online-
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+# this tutorial will cater to most of the features to be implemented, including 1,7,8 directly
