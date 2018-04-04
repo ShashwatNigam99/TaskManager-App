@@ -2,18 +2,24 @@
 	TASK LISTS
 	TASKS(assigned to participants added by Owner)
 
-Board page--
+####main page
+it will have a left side panel if my tasks sorted in order of nearest deadline
+(<1 day-red
+1-3 days- yellow
+3+ days -green)
 
-my page--
-
-
++ a search panel on the navbar
++ a plus symbol on the navbar to add boards or to make a team
++ click on a board to access it( add members and whatever board related bullshit)
++ notifications for invites and accept/reject messgaes of your requests
++ a logout cum settings (profile settings)
 
 
 Owner and participants can add viewers
 Only owner can add participants(subject to change)
 
-### people can search for tasks and request to be added as viewer or participant (request will be diplayed on the board page)
-### blocked list of annoying people on trello
+!!! people can search for tasks and request to be added as viewer or participant (request will be diplayed on the board page)
+!!! blocked list of annoying people on trello
 
 owner and participants can create tasks
 owner can kickout participants
@@ -41,7 +47,7 @@ Followed by email verification
 
 1. Registration​ ​ and​ ​ Login​ ​ for​ ​ Users, !!social media login
 
-((( 
+(((
 
 2. Create task list. $ each task will display name of task, participants,
    Reorder tasks in task list .$ NOT YET DECIDED
@@ -66,10 +72,10 @@ VIEWER - viewer can only see the tasks on the board
 ---- profile page of users can show how many task-lists they are part of,
 ---- how many tasks they have successfully completed etc
 
-8.Search by title or tags # chapter 16 in the blog tutorial 
+8.Search by title or tags # chapter 16 in the blog tutorial
 
-9.Task Dependency: a task cannot be completed/deleted till the tasks on which it depends have
-been completed
+?????? 9.Task Dependency: a task cannot be completed/deleted till the tasks on which it depends have
+been completed??????
 
 (6 marks for each feature)
 EXTRA FEATURES--

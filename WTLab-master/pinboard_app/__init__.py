@@ -1,11 +1,11 @@
-# /home/tanuj/Work/wt/original/pinboard/venv/bin/pyhton
+# /home/tanuj/Work/wt/original/pinboard/venv/bin/python
 from flask import Flask, jsonify, request, session, redirect
 from models import db, ma, Board, List, Card, BoardSchema, ListSchema, CardSchema, UserSchema
 from flask_marshmallow import Marshmallow
 # from sqlalchemy.ext.declarative import DeclarativeMeta
 # from mongokit import Connection, Document
 import json
-import models
+
 import datetime
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
