@@ -86,3 +86,6 @@ EXTRA FEATURES--
 Tutorials online-
 https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 # this tutorial will cater to most of the features to be implemented, including 1,7,8 directly
+
+Understanding Lazy in SQLAlchemy:
+https://www.youtube.com/watch?v=g1oFlq7D_nQ
