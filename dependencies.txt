@@ -1,0 +1,26 @@
+This application uses Python3.5.2.
+The following are the dependencies for hosting the application on a machine:
+
+Virtual environment:
+sudo apt install virtualenv
+
+To create virtual environment:
+virtualenv venv
+
+To activate virtual environment:
+source venv/bin/activate
+
+Flask:
+pip install flask
+
+Flask-WTF:
+pip install flask-wtf
+
+Flask-Sqlalchemy:
+pip install flask-sqlalchemy
+
+Flask-Migrate:
+pip install flask-migrate
+
+
+
