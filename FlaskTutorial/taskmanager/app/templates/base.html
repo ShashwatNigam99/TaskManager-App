@@ -1,13 +1,13 @@
 <html>
   <head>
     {% if title %}
-    <title>{{title}} - Microblog</title>
+    <title>{{title}} - TaskManager</title>
     {% else %}
-    <title>Welcome to Microblog</title>
+    <title>Welcome to TaskManager</title>
     {% endif %}
   </head>
   <body>
-    <div>Microblog:
+    <div>TaskManager:
       <a href="{{url_for('index')}}">Home</a>
       <a href="{{url_for('login')}}">Login</a>
     </div>
