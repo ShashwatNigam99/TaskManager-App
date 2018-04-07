@@ -89,3 +89,6 @@ https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 
 Understanding Lazy in SQLAlchemy:
 https://www.youtube.com/watch?v=g1oFlq7D_nQ
+
+For password hashing using secret key:
+https://stackoverflow.com/questions/1306550/calculating-a-sha-hash-with-a-string-secret-key-in-python
