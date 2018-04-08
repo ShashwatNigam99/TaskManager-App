@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Hi, {{ current_user.username }}!</h1<br>
-  <h3>Your boards are -></h3><br>
-  {% for board in current_user.boards %}
-  <div><p>{{ board.name }}</p></div>
-  {% endfor %}
+  <h1>Hi, {{ current_user.username }}!</h1>
 {% endblock %}
