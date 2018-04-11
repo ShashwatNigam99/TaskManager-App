@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, NewBoardForm, NewListForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Board, List, Card
 from werkzeug.urls import url_parse
 from datetime import datetime
 # if you import forms in init then no need to write app.forms check this out
@@ -73,6 +73,21 @@ def user(username):
 # this function executes before any view function in the application
 
 
+@app.route('/showboard/<boardname>')
+@login_required
+def showboard(boardname):
+    board = Board.query.filter_by(name=boardname).first_or_404()
+    return render_template('showboard.html', board=board)
+
+
+@app.route('/showlist/<boardname>/<listname>')
+@login_required
+def showlist(boardname, listname):
+    listx = List.query.filter_by(title=listname).first_or_404()
+    board = Board.query.filter_by(name=boardname).first_or_404()
+    return render_template('showlist.html', list=listx, board=board)
+
+
 @app.before_request
 def before_request():
     if current_user.is_authenticated:
@@ -95,3 +110,38 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
+
+
+@app.route('/newboard', methods=['GET', 'POST'])
+@login_required
+def newboard():
+    form = NewBoardForm()
+    if form.validate_on_submit():
+        board = Board(name=form.name.data)
+        current_user.boards.append(board)
+        # i think the next line is redundant cuz if we check the helper table
+        # double entries are made for every user table relation pair
+        # board.users.append(current_user)
+        db.session.add(board)
+        db.session.commit()
+        flash('New board created!')
+        return redirect(url_for('index'))
+    return render_template('newboard.html', title='Create new board', form=form)
+
+
+@app.route('/newlist/<boardname>', methods=['GET', 'POST'])
+@login_required
+def newlist(boardname):
+    form = NewListForm()
+    if form.validate_on_submit():
+        board = Board.query.filter_by(name=boardname).first_or_404()
+        listx = List(title=form.title.data, board_id=board.id)
+        board.lists.append(listx)
+        # i think the next line is redundant cuz if we check the helper table
+        # double entries are made for every user table relation pair
+        # board.users.append(current_user)
+        db.session.add(listx)
+        db.session.commit()
+        flash('New list created!')
+        return redirect(url_for('showboard', boardname=boardname))
+    return render_template('newlist.html', title='Create new list', form=form)

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<h2> List: {{ list.name }}</h2>
+<br>
+<h4><a href="{{url_for('showboard', boardname = board.name)}}"> --Go back to your Lists</a></h4>
+<hr>
+<h2><a href="{{url_for('newcard')}}">Click here to create a new card</a></h2>
+<hr>
+{% for card in list.cards %}
+<p>
+<a href="{{ url_for('showcards',boardname = board.name, listname = list.title, cardname = card.name) }}">{{ card.name }}</a>
+</p>
+<hr>
+{% endfor %}
+{% endblock %}

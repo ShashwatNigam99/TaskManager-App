@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Hi, {{ current_user.username }}!</h1>
+  <hr>
+  <h2><a href="{{url_for('newboard')}}">Click here to create a new board</a></h2>
+  <hr>
+  <h1>Your Boards -></h1>
+  {% for board in current_user.boards %}
+  <p>
+    <h3>
+      <a href="{{ url_for('showboard',boardname = board.name) }}">{{board.name}}</a>
+    </h3>
+  </p>
+  {% endfor %}
+{% endblock %}
