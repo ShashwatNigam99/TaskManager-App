@@ -1,0 +1,18 @@
+.flex-container{
+  display:flex;
+  align-items: center;
+}
+
+.flex-row-item-img{
+  align-content: center;
+  padding : 1em;
+  margin: 1em;
+  flex:1;
+}
+
+.flex-row-item-txt{
+  align-content: center;
+  padding : 1em;
+  margin: 1em;
+  flex:3;
+}

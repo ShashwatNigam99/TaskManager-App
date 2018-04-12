@@ -2,10 +2,10 @@
 
 {% block content %}
 <div class="flex-container">
-  <div class="flex-row-item">
-    <img src= "{{ user.avatar(128) }}">
+  <div class="flex-row-item-img">
+    <img class="profile-pic" src= "{{ user.avatar(128) }}">
   </div>
-  <div class="flex-row-item">
+  <div class="flex-row-item-txt">
     <h1>User: {{ user.username }}</h1>
   </div>
 </div>
