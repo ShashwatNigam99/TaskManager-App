@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<h2> Card: {{ card.name }}</h2>
+<br>
+<h4><a href="{{url_for('showlist', boardname = board.name, listname = list.name)}}"> --Go back to your Cards</a></h4>
+<hr>
+<h2><strong>Description:</strong></h2><br><h4>{{card.desc}}</h4>
+<hr>
+<h2><strong>Start Date:</strong></h2><h4>{{card.timestart}}</h4>
+<hr>
+<h2><strong>Deadline:</strong></h2><h4>{{card.deadline}}</h4>
+<hr>
+{% endblock %}

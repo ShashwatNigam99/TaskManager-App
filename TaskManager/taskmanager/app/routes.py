@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, NewBoardForm, NewListForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, NewBoardForm, NewListForm, NewCardForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Board, List, Card
 from werkzeug.urls import url_parse
@@ -85,7 +85,7 @@ def showboard(boardname):
 def showlist(boardname, listname):
     listx = List.query.filter_by(title=listname).first_or_404()
     board = Board.query.filter_by(name=boardname).first_or_404()
-    return render_template('showlist.html', list=listx, board=board)
+    return render_template('showlist.html',board=board,list=listx)
 
 
 @app.before_request
@@ -137,11 +137,34 @@ def newlist(boardname):
         board = Board.query.filter_by(name=boardname).first_or_404()
         listx = List(title=form.title.data, board_id=board.id)
         board.lists.append(listx)
-        # i think the next line is redundant cuz if we check the helper table
-        # double entries are made for every user table relation pair
-        # board.users.append(current_user)
         db.session.add(listx)
         db.session.commit()
         flash('New list created!')
         return redirect(url_for('showboard', boardname=boardname))
     return render_template('newlist.html', title='Create new list', form=form)
+
+
+@app.route('/newcard/<boardname>/<listname>', methods=['GET', 'POST'])
+@login_required
+def newcard(boardname, listname):
+    form = NewCardForm()
+    if form.validate_on_submit():
+        board = Board.query.filter_by(name=boardname).first_or_404()
+        listx = List.query.filter_by(title=listname).first_or_404()
+        card = Card(name = form.name.data, desc = form.desc.data,
+         timestart = form.timestart.data, deadline = form.deadline.data, list_id = listx.id)
+        listx.cards.append(card)
+        db.session.add(card)
+        db.session.commit()
+        flash('New card created!')
+        return redirect(url_for('showlist', boardname=boardname, listname=listname))
+    return render_template('newcard.html', title='Create new card', form=form)
+
+
+@app.route('/showcard/<boardname>/<listname>/<cardname>')
+@login_required
+def showcard(boardname,listname,cardname):
+    listx = List.query.filter_by(title=listname).first_or_404()
+    board = Board.query.filter_by(name=boardname).first_or_404()
+    card = Card.query.filter_by(name=cardname).first_or_404()
+    return render_template('showcard.html', board=board, list=listx, card=card)

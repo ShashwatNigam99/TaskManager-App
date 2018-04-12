@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 
@@ -39,9 +40,17 @@ class EditProfileForm(FlaskForm):
 
 class NewBoardForm(FlaskForm):
     name = StringField('Board Name:', validators=[DataRequired()])
-    submit = SubmitField('Create New Board!')
+    submit = SubmitField('Create New Board')
 
 
 class NewListForm(FlaskForm):
     title = StringField('List title', validators=[DataRequired()])
-    submit = SubmitField('Create New List!')
+    submit = SubmitField('Create New List')
+
+
+class NewCardForm(FlaskForm):
+    name = StringField('Card name', validators=[DataRequired()])
+    desc = TextAreaField('Description', validators=[Length(min=30, max=1600), DataRequired()])
+    timestart = DateField('Start')
+    deadline = DateField('Deadline', validators=[DataRequired()])
+    submit = SubmitField('Create New Card')

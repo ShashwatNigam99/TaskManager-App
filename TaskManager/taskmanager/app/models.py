@@ -51,8 +51,8 @@ class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     desc = db.Column(db.String(1600), nullable=False)
-    timestart = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    deadline = db.Column(db.DateTime, nullable=False)
+    timestart = db.Column(db.Date, index=True, nullable=False, default=datetime.date(datetime.utcnow()))
+    deadline = db.Column(db.Date, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey(
         'list.id'))  # foreign key from list
 

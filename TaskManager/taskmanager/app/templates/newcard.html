@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content%}
+  <h1>Hi, {{current_user.username }}!</h1>
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.name.label }}<br>
+      {{ form.name(size=32) }}<br>
+      {% for error in form.name.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.timestart.label }}<br>
+      {{ form.timestart(class='datepicker')}}<br>
+      {% for error in form.timestart.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.deadline.label }}<br>
+      {{ form.deadline(class='datepicker')}}<br>
+      {% for error in form.deadline.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.desc.label }}<br>
+      {{ form.desc(cols=75,rows=6) }}<br>
+      {% for error in form.desc.errors %}
+      <span style="color: red;">[{{error}}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+  </form>
+{% endblock %}
