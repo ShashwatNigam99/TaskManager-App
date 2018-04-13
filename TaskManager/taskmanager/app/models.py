@@ -35,16 +35,16 @@ class User(UserMixin, db.Model):
 class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    lists = db.relationship('List', backref='board', lazy='dynamic')
-    users = db.relationship('User', secondary=user_boards, backref='boards')
+    lists = db.relationship('List', backref='board', cascade="all,delete", lazy='dynamic')
+    users = db.relationship('User', secondary=user_boards, cascade="all,delete", backref='boards')
 
 
 class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(30), nullable=False)
+    title = db.Column(db.String(30), nullable=False)    
     board_id = db.Column(db.Integer, db.ForeignKey(
         'board.id'))  # foreign key from board
-    cards = db.relationship('Card', backref='list', lazy='dynamic')
+    cards = db.relationship('Card', backref='list', cascade="all,delete", lazy='dynamic')
 
 
 class Card(db.Model):

@@ -10,6 +10,7 @@
     <h3>
       <a href="{{ url_for('showboard',boardname = board.name) }}">{{board.name}}</a>
     </h3>
+    <h5><a href="{{url_for('deleteboard', boardname = board.name) }}"> Delete Board </a></h5>
   </p>
   <hr>
   {% endfor %}

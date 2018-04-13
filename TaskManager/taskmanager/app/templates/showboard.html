@@ -9,9 +9,10 @@
 {% for list in board.lists %}
 <p>
 <h3><a href="{{ url_for('showlist',boardname = board.name, listname = list.title) }}">{{ list.title }}</a></h3>
+<h5><a href="{{url_for('deletelist', boardname=board.name, listname=list.title) }}"> Delete List </a></h5>
 </p>
 <hr>
+{% endfor %}
 <h5><a href="{{url_for('newlist',boardname = board.name )}}">Click here to create a new list</a></h5>
 <hr>
-{% endfor %}
 {% endblock %}

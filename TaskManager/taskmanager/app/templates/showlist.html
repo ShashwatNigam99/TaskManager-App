@@ -10,6 +10,7 @@
 <p>
 <h3><a href="{{ url_for('showcard', boardname=board.name , listname=list.title, cardname = card.name) }}"> {{ card.name }}</a><br>
   <h4>Deadline: {{card.deadline}}</h4>
+  <h5><a href="{{url_for('deletecard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Delete Card </a></h5>
 </h3>
 </p>
 <hr>

@@ -168,3 +168,35 @@ def showcard(boardname, listname, cardname):
     board = Board.query.filter_by(name=boardname).first_or_404()
     card = Card.query.filter_by(name=cardname).first_or_404()
     return render_template('showcard.html', board=board, list=listx, card=card)
+
+
+@app.route('/deletecard/<boardname>/<listname>/<cardname>')
+@login_required
+def deletecard(boardname, listname, cardname):
+    listx = List.query.filter_by(title=listname).first_or_404()
+    board = Board.query.filter_by(name=boardname).first_or_404()
+    card = Card.query.filter_by(name=cardname).first_or_404()
+    listx.cards.remove(card)
+    db.session.delete(card)
+    db.session.commit()
+    return render_template('showlist.html', board=board, list=listx)
+
+
+@app.route('/deletelist/<boardname>/<listname>')
+@login_required
+def deletelist(boardname, listname):
+    listx = List.query.filter_by(title=listname).first_or_404()
+    board = Board.query.filter_by(name=boardname).first_or_404()
+    board.lists.remove(listx)
+    db.session.delete(listx )
+    db.session.commit()
+    return render_template('showboard.html', board=board)
+
+@app.route('/deleteboard/<boardname>')
+@login_required
+def deleteboard(boardname):
+    board = Board.query.filter_by(name=boardname).first_or_404()
+    current_user.boards.remove(board)
+    db.session.delete(board)
+    db.session.commit()
+    return render_template('index.html')
