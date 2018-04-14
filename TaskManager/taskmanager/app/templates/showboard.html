@@ -4,7 +4,8 @@
 <br>
 <h2> Board: {{ board.name }}</h2>
 <br>
-<h5><a href="{{url_for('index')}}"> --Go back to your Boards</a></h5>
+<h5><a href="{{ url_for('index')}}"> --Go back to your Boards</a></h5>
+<h3><a href="{{ url_for('searchuser',boardname = board.name )}}">Click here to search for a user</a></h3>
 <hr>
 {% for list in board.lists %}
 <p>

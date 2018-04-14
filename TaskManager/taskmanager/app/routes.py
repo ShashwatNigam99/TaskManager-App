@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, NewBoardForm, NewListForm, NewCardForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, NewBoardForm, NewListForm, NewCardForm, SearchUsers
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Board, List, Card
 from werkzeug.urls import url_parse
 from datetime import datetime
+import sqlite3
 # if you import forms in init then no need to write app.forms check this out
 
 
@@ -12,7 +13,8 @@ from datetime import datetime
 @app.route('/index/')
 @login_required
 def index():
-    return render_template('index.html', title='Home Page')
+    form = SearchUsers()
+    return render_template('index.html', title='Home Page', form=form)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -112,6 +114,29 @@ def edit_profile():
                            form=form)
 
 
+@app.route('/searchuser/<boardname>', methods=['GET', 'POST'])
+@login_required
+def searchuser(boardname):
+    conn = sqlite3.connect('app.db')
+    print("Database opened successfully")
+    form = SearchUsers()
+    print("form created")
+    if form.validate_on_submit():
+        srch = "'"
+        srch = srch+form.usersrch.data
+        print(srch)
+        cur = conn.cursor()
+        sql_command = 'select * from user where name like ' + srch + '%'
+        sql_command += "'"
+        print(sql_command)
+        cur.execute(sql_command)
+        users = cur.fetchall()
+        print("madarchod")
+        print(users)
+        return redirect(url_for('showboard', boardname=boardname))
+    return render_template('searchuser.html', title='Search for a user', form=form)
+
+
 @app.route('/newboard/', methods=['GET', 'POST'])
 @login_required
 def newboard():
@@ -188,9 +213,10 @@ def deletelist(boardname, listname):
     listx = List.query.filter_by(title=listname).first_or_404()
     board = Board.query.filter_by(name=boardname).first_or_404()
     board.lists.remove(listx)
-    db.session.delete(listx )
+    db.session.delete(listx)
     db.session.commit()
     return render_template('showboard.html', board=board)
+
 
 @app.route('/deleteboard/<boardname>')
 @login_required

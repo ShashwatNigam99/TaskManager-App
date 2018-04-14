@@ -50,7 +50,13 @@ class NewListForm(FlaskForm):
 
 class NewCardForm(FlaskForm):
     name = StringField('Card name', validators=[DataRequired()])
-    desc = TextAreaField('Description', validators=[Length(min=30, max=1600), DataRequired()])
+    desc = TextAreaField('Description', validators=[
+                         Length(min=30, max=1600), DataRequired()])
     timestart = DateField('Start')
     deadline = DateField('Deadline', validators=[DataRequired()])
     submit = SubmitField('Create New Card')
+
+
+class SearchUsers(FlaskForm):
+    usersrch = StringField('Search by username', validators=[DataRequired()])
+    submit = SubmitField('Search users')
