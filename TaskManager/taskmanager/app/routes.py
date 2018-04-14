@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, NewBoardForm, NewListForm, NewCardForm, SearchUsers
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, NewBoardForm, NewListForm, NewCardForm, SearchUsers, EditCardForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Board, List, Card
 from werkzeug.urls import url_parse
@@ -126,15 +126,15 @@ def searchuser(boardname):
         srch = srch+form.usersrch.data
         print(srch)
         cur = conn.cursor()
-        sql_command = 'select * from user where name like ' + srch + '%'
+        sql_command = 'select * from user where username like ' + srch + '%'
         sql_command += "'"
-        print(sql_command)
         cur.execute(sql_command)
         users = cur.fetchall()
-        print("madarchod")
         print(users)
+        for x in users:
+            print x[1]
         return redirect(url_for('showboard', boardname=boardname))
-    return render_template('searchuser.html', title='Search for a user', form=form)
+    return render_template('searchuser.html', title='Search By Username', form=form)
 
 
 @app.route('/newboard/', methods=['GET', 'POST'])
@@ -177,7 +177,7 @@ def newcard(boardname, listname):
         board = Board.query.filter_by(name=boardname).first_or_404()
         listx = List.query.filter_by(title=listname).first_or_404()
         card = Card(name=form.name.data, desc=form.desc.data,
-                    timestart=form.timestart.data, deadline=form.deadline.data, list_id=listx.id)
+                    timestart=form.timestart.data, deadline=form.deadline.data, list_id=listx.id, priority=form.priority.data.upper())
         listx.cards.append(card)
         db.session.add(card)
         db.session.commit()
@@ -226,3 +226,28 @@ def deleteboard(boardname):
     db.session.delete(board)
     db.session.commit()
     return render_template('index.html')
+
+@app.route('/editcard/<boardname>/<listname>/<cardname>', methods=['GET', 'POST'])
+@login_required
+def editcard(boardname, listname, cardname):
+    board = Board.query.filter_by(name=boardname).first_or_404()
+    listx = List.query.filter_by(title=listname).first_or_404()
+    card = Card.query.filter_by(name=cardname).first_or_404()
+    form=EditCardForm()
+    if form.validate_on_submit():
+        card.name = form.name.data
+        card.desc = form.desc.data
+        card.timestart = form.timestart.data
+        card.deadline = form.deadline.data
+        card.priority = form.priority.data.upper()
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('showcard',boardname=board.name,listname=listx.title,cardname=card.name))
+    elif request.method == 'GET':
+        form.name.data = card.name
+        form.desc.data = card.desc
+        form.timestart.data = card.timestart
+        form.deadline.data = card.deadline
+        form.priority.data = card.priority
+    return render_template('editcard.html', title='Edit Card',
+                           form=form)

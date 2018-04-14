@@ -54,9 +54,28 @@ class NewCardForm(FlaskForm):
                          Length(min=30, max=1600), DataRequired()])
     timestart = DateField('Start')
     deadline = DateField('Deadline', validators=[DataRequired()])
+    priority = StringField('Priority', validators=[DataRequired()])
     submit = SubmitField('Create New Card')
+
+    def validate_priority(self,priority):
+        if priority.data.lower() != 'low' and priority.data.lower() != 'medium' and priority.data.lower() != 'high':
+            raise ValidationError('Invalid Priority')
 
 
 class SearchUsers(FlaskForm):
     usersrch = StringField('Search by username', validators=[DataRequired()])
     submit = SubmitField('Search users')
+
+
+class EditCardForm(FlaskForm):
+    name = StringField('Card name', validators=[DataRequired()])
+    desc = TextAreaField('Description', validators=[
+                         Length(min=30, max=1600), DataRequired()])
+    timestart = DateField('Start')
+    deadline = DateField('Deadline', validators=[DataRequired()])
+    priority = StringField('Priority', validators=[DataRequired()])
+    submit = SubmitField('Save Changes')
+
+    def validate_priority(self,priority):
+        if priority.data.lower() != 'low' and priority.data.lower() != 'medium' and priority.data.lower() != 'high':
+            raise ValidationError('Invalid Priority')

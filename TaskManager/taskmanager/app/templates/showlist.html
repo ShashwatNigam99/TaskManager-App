@@ -6,15 +6,56 @@
 <br>
 <h5><a href="{{url_for('showboard', boardname = board.name)}}"> --Go back to your Lists</a></h5>
 <hr>
+
 {% for card in list.cards %}
+{% if card.priority == "HIGH" %}
 <p>
-<h3><a href="{{ url_for('showcard', boardname=board.name , listname=list.title, cardname = card.name) }}"> {{ card.name }}</a><br>
+<h3><a href="{{ url_for('showcard', boardname=board.name , listname=list.title, cardname = card.name) }}">TASK:{{ card.name }}</a><br>
   <h4>Deadline: {{card.deadline}}</h4>
-  <h5><a href="{{url_for('deletecard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Delete Card </a></h5>
+  <h3 style="color:red;">Priority: {{card.priority }}</h3>
+
+  <p>
+    <h5><a href="{{url_for('deletecard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Delete Card </a></h5>
+    <h5><a href="{{url_for('editcard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Edit Card</a>
+  </p>
 </h3>
 </p>
 <hr>
+{% endif %}
 {% endfor %}
+
+{% for card in list.cards %}
+   {% if card.priority == "MEDIUM" %}
+<p>
+<h3><a href="{{ url_for('showcard', boardname=board.name , listname=list.title, cardname = card.name) }}">TASK: {{ card.name }}</a><br>
+  <h4>Deadline: {{card.deadline}}</h4>
+  <h3 style="color:yellow;">Priority: {{card.priority }}</h3>
+  <p>
+    <h5><a href="{{url_for('deletecard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Delete Card </a></h5>
+    <h5><a href="{{url_for('editcard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Edit Card</a>
+  </p>
+</h3>
+</p>
+<hr>
+{% endif %}
+{% endfor %}
+
+{% for card in list.cards %}
+  {% if card.priority == "LOW" %}
+<p>
+<h3><a href="{{ url_for('showcard', boardname=board.name , listname=list.title, cardname = card.name) }}">TASK: {{ card.name }}</a><br>
+  <h4>Deadline: {{card.deadline}}</h4>
+  <h3 style="color:green;">Priority: {{card.priority }}</h3>
+  <p>
+    <h5><a href="{{url_for('deletecard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Delete Card </a></h5>
+    <h5><a href="{{url_for('editcard', boardname=board.name, listname=list.title, cardname=card.name) }}"> Edit Card</a>
+  </p>
+</h3>
+</p>
+<hr>
+{% endif %}
+{% endfor %}
+
 <h5><a href="{{url_for('newcard', boardname = board.name , listname = list.title)}}"> Click here to create a new card</a></h5>
 <hr>
 {% endblock %}

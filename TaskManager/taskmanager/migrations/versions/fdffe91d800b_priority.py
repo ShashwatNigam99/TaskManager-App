@@ -1,8 +1,8 @@
-"""Tables
+"""priority
 
-Revision ID: 7db51c427781
+Revision ID: fdffe91d800b
 Revises: 
-Create Date: 2018-04-13 22:19:13.178112
+Create Date: 2018-04-14 16:48:55.267405
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7db51c427781'
+revision = 'fdffe91d800b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,6 +55,7 @@ def upgrade():
     sa.Column('timestart', sa.Date(), nullable=False),
     sa.Column('deadline', sa.Date(), nullable=False),
     sa.Column('list_id', sa.Integer(), nullable=True),
+    sa.Column('priority', sa.String(length=5), nullable=False),
     sa.ForeignKeyConstraint(['list_id'], ['list.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

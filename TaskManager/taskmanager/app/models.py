@@ -41,7 +41,7 @@ class Board(db.Model):
 
 class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(30), nullable=False)    
+    title = db.Column(db.String(30), nullable=False)
     board_id = db.Column(db.Integer, db.ForeignKey(
         'board.id'))  # foreign key from board
     cards = db.relationship('Card', backref='list', cascade="all,delete", lazy='dynamic')
@@ -55,6 +55,8 @@ class Card(db.Model):
     deadline = db.Column(db.Date, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey(
         'list.id'))  # foreign key from list
+    priority = db.Column(db.String(5), nullable=False)    
+
 
 
 @login.user_loader
