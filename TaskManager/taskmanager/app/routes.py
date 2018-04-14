@@ -258,3 +258,32 @@ def editcard(boardid, listid, cardid):
         form.priority.data = card.priority
     return render_template('editcard.html', title='Edit Card',
                            form=form)
+
+@app.route('/listoptions/<boardid>/<listid>/<cardid>/')
+@login_required
+def listoptions(boardid,listid,cardid):
+    board = Board.query.filter_by(id=boardid).first_or_404()
+    listx = List.query.filter_by(id=listid).first_or_404()
+    card = Card.query.filter_by(id=cardid).first_or_404()
+    print(board.name)
+    print(card.name)
+    print(listx.title)
+    return render_template('listoptions.html', board=board, list=listx, card=card)
+
+@app.route('/movecard/<boardid>/<listid1>/<listid2>/<cardid>/')
+@login_required
+def movecard(boardid,listid1,listid2,cardid):
+    board = Board.query.filter_by(id=boardid).first_or_404()
+    listx1 = List.query.filter_by(id=listid1).first_or_404()
+    listx2 = List.query.filter_by(id=listid2).first_or_404()
+    card = Card.query.filter_by(id=cardid).first_or_404()
+    cardx = Card(name=card.name, desc=card.desc,
+                timestart=card.timestart, deadline=card.deadline, list_id=listx2.id, priority=card.priority)
+    listx1.cards.remove(card)
+    db.session.delete(card)
+    print(cardx.name)
+    print("lol")
+    listx2.cards.append(cardx)
+    db.session.add(cardx)
+    db.session.commit()
+    return render_template('movecard.html',board=board,list1=listx1,list2=listx2,card=card)

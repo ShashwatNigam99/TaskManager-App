@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Your card has been moved from {{ list1.title }} to {{ list2.title }}</h2>
+<h3><a href="{{ url_for('showlist',boardid = board.id, listid = list2.id) }}">Go to List: {{ list2.title }}</a></h3>
+{% endblock %}

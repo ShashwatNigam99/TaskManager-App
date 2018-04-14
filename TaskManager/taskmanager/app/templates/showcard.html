@@ -5,6 +5,7 @@
 <h2> Card: {{ card.name }}</h2>
 <br>
 <h4><a href="{{url_for('showlist', boardid = board.id, listid = list.id)}}"> --Go back to your Cards</a></h4>
+<h4><a href="{{url_for('listoptions', boardid=board.id, listid=list.id, cardid=card.id)}}">Move Card</a></h4>
 <hr>
 <h3><strong><u>Priority: </u><strong></h3><br><h4>{{card.priority}}</h4>
 <hr>
