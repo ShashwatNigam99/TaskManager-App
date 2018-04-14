@@ -75,18 +75,18 @@ def user(username):
 # this function executes before any view function in the application
 
 
-@app.route('/showboard/<boardname>/')
+@app.route('/showboard/<boardid>/')
 @login_required
-def showboard(boardname):
-    board = Board.query.filter_by(name=boardname).first_or_404()
+def showboard(boardid):
+    board = Board.query.filter_by(id=boardid).first_or_404()
     return render_template('showboard.html', board=board)
 
 
-@app.route('/showlist/<boardname>/<listname>/')
+@app.route('/showlist/<boardid>/<listid>/')
 @login_required
-def showlist(boardname, listname):
-    listx = List.query.filter_by(title=listname).first_or_404()
-    board = Board.query.filter_by(name=boardname).first_or_404()
+def showlist(boardid, listid):
+    listx = List.query.filter_by(id=listid).first_or_404()
+    board = Board.query.filter_by(id=boardid).first_or_404()
     return render_template('showlist.html', board=board, list=listx)
 
 
@@ -114,9 +114,9 @@ def edit_profile():
                            form=form)
 
 
-@app.route('/searchuser/<boardname>', methods=['GET', 'POST'])
+@app.route('/searchuser/<boardid>', methods=['GET', 'POST'])
 @login_required
-def searchuser(boardname):
+def searchuser(boardid):
     conn = sqlite3.connect('app.db')
     print("Database opened successfully")
     form = SearchUsers()
@@ -136,7 +136,14 @@ def searchuser(boardname):
         print(users)
         for x in users:
             print(x[1])
-    return render_template('searchuser.html', title='Search By Username', form=form, boardname=boardname, users=users)
+    return render_template('searchuser.html', title='Search By Username', form=form, boardid=boardid, users=users)
+
+
+# @app.route('/seeuser/<boardname>/<username>/', methods=['GET', 'POST'])
+# @login_required
+# def seeuser(boardname, username):
+#    user = User.query.filter_by(username=username).first_or_404()
+#    return render_template('seeuser.html', user=user, boardname=boardname)
 
 
 @app.route('/newboard/', methods=['GET', 'POST'])
@@ -146,9 +153,6 @@ def newboard():
     if form.validate_on_submit():
         board = Board(name=form.name.data)
         current_user.boards.append(board)
-        # i think the next line is redundant cuz if we check the helper table
-        # double entries are made for every user table relation pair
-        # board.users.append(current_user)
         db.session.add(board)
         db.session.commit()
         flash('New board created!')
@@ -156,86 +160,86 @@ def newboard():
     return render_template('newboard.html', title='Create new board', form=form)
 
 
-@app.route('/newlist/<boardname>/', methods=['GET', 'POST'])
+@app.route('/newlist/<boardid>/', methods=['GET', 'POST'])
 @login_required
-def newlist(boardname):
+def newlist(boardid):
     form = NewListForm()
     if form.validate_on_submit():
-        board = Board.query.filter_by(name=boardname).first_or_404()
-        listx = List(title=form.title.data, board_id=board.id)
+        board = Board.query.filter_by(id=boardid).first_or_404()
+        listx = List(title=form.title.data, board_id=boardid)
         board.lists.append(listx)
         db.session.add(listx)
         db.session.commit()
         flash('New list created!')
-        return redirect(url_for('showboard', boardname=boardname))
+        return redirect(url_for('showboard', boardid=boardid))
     return render_template('newlist.html', title='Create new list', form=form)
 
 
-@app.route('/newcard/<boardname>/<listname>/', methods=['GET', 'POST'])
+@app.route('/newcard/<boardid>/<listid>/', methods=['GET', 'POST'])
 @login_required
-def newcard(boardname, listname):
+def newcard(boardid, listid):
     form = NewCardForm()
     if form.validate_on_submit():
-        board = Board.query.filter_by(name=boardname).first_or_404()
-        listx = List.query.filter_by(title=listname).first_or_404()
+        board = Board.query.filter_by(id=boardid).first_or_404()
+        listx = List.query.filter_by(id=listid).first_or_404()
         card = Card(name=form.name.data, desc=form.desc.data,
                     timestart=form.timestart.data, deadline=form.deadline.data, list_id=listx.id, priority=form.priority.data.upper())
         listx.cards.append(card)
         db.session.add(card)
         db.session.commit()
         flash('New card created!')
-        return redirect(url_for('showlist', boardname=boardname, listname=listname))
+        return redirect(url_for('showlist', boardid=boardid, listid=listid))
     return render_template('newcard.html', title='Create new card', form=form)
 
 
-@app.route('/showcard/<boardname>/<listname>/<cardname>/')
+@app.route('/showcard/<boardid>/<listid>/<cardid>/')
 @login_required
-def showcard(boardname, listname, cardname):
-    listx = List.query.filter_by(title=listname).first_or_404()
-    board = Board.query.filter_by(name=boardname).first_or_404()
-    card = Card.query.filter_by(name=cardname).first_or_404()
+def showcard(boardid, listid, cardid):
+    listx = List.query.filter_by(id=listid).first_or_404()
+    board = Board.query.filter_by(id=boardid).first_or_404()
+    card = Card.query.filter_by(id=cardid).first_or_404()
     return render_template('showcard.html', board=board, list=listx, card=card)
 
 
-@app.route('/deletecard/<boardname>/<listname>/<cardname>')
+@app.route('/deletecard/<boardid>/<listid>/<cardid>')
 @login_required
-def deletecard(boardname, listname, cardname):
-    listx = List.query.filter_by(title=listname).first_or_404()
-    board = Board.query.filter_by(name=boardname).first_or_404()
-    card = Card.query.filter_by(name=cardname).first_or_404()
+def deletecard(boardid, listid, cardid):
+    listx = List.query.filter_by(id=listid).first_or_404()
+    board = Board.query.filter_by(id=boardid).first_or_404()
+    card = Card.query.filter_by(id=cardid).first_or_404()
     listx.cards.remove(card)
     db.session.delete(card)
     db.session.commit()
     return render_template('showlist.html', board=board, list=listx)
 
 
-@app.route('/deletelist/<boardname>/<listname>')
+@app.route('/deletelist/<boardid>/<listid>')
 @login_required
-def deletelist(boardname, listname):
-    listx = List.query.filter_by(title=listname).first_or_404()
-    board = Board.query.filter_by(name=boardname).first_or_404()
+def deletelist(boardid, listid):
+    listx = List.query.filter_by(id=listid).first_or_404()
+    board = Board.query.filter_by(id=boardid).first_or_404()
     board.lists.remove(listx)
     db.session.delete(listx)
     db.session.commit()
     return render_template('showboard.html', board=board)
 
 
-@app.route('/deleteboard/<boardname>')
+@app.route('/deleteboard/<boardid>')
 @login_required
-def deleteboard(boardname):
-    board = Board.query.filter_by(name=boardname).first_or_404()
+def deleteboard(boardid):
+    board = Board.query.filter_by(id=boardid).first_or_404()
     current_user.boards.remove(board)
     db.session.delete(board)
     db.session.commit()
     return render_template('index.html')
 
 
-@app.route('/editcard/<boardname>/<listname>/<cardname>', methods=['GET', 'POST'])
+@app.route('/editcard/<boardid>/<listid>/<cardid>', methods=['GET', 'POST'])
 @login_required
-def editcard(boardname, listname, cardname):
-    board = Board.query.filter_by(name=boardname).first_or_404()
-    listx = List.query.filter_by(title=listname).first_or_404()
-    card = Card.query.filter_by(name=cardname).first_or_404()
+def editcard(boardid, listid, cardid):
+    listx = List.query.filter_by(id=listid).first_or_404()
+    board = Board.query.filter_by(id=boardid).first_or_404()
+    card = Card.query.filter_by(id=cardid).first_or_404()
     form = EditCardForm()
     if form.validate_on_submit():
         card.name = form.name.data
@@ -245,7 +249,7 @@ def editcard(boardname, listname, cardname):
         card.priority = form.priority.data.upper()
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('showcard', boardname=board.name, listname=listx.title, cardname=card.name))
+        return redirect(url_for('showcard', boardid=board.id, listid=listx.id, cardid=card.id))
     elif request.method == 'GET':
         form.name.data = card.name
         form.desc.data = card.desc
