@@ -120,8 +120,10 @@ def searchuser(boardname):
     conn = sqlite3.connect('app.db')
     print("Database opened successfully")
     form = SearchUsers()
+    users = []
     print("form created")
     if form.validate_on_submit():
+        flag = 1
         srch = "'"
         srch = srch+form.usersrch.data
         print(srch)
@@ -130,11 +132,11 @@ def searchuser(boardname):
         sql_command += "'"
         cur.execute(sql_command)
         users = cur.fetchall()
+        conn.close()
         print(users)
         for x in users:
-            print x[1]
-        return redirect(url_for('showboard', boardname=boardname))
-    return render_template('searchuser.html', title='Search By Username', form=form)
+            print(x[1])
+    return render_template('searchuser.html', title='Search By Username', form=form, boardname=boardname, users=users)
 
 
 @app.route('/newboard/', methods=['GET', 'POST'])
@@ -227,13 +229,14 @@ def deleteboard(boardname):
     db.session.commit()
     return render_template('index.html')
 
+
 @app.route('/editcard/<boardname>/<listname>/<cardname>', methods=['GET', 'POST'])
 @login_required
 def editcard(boardname, listname, cardname):
     board = Board.query.filter_by(name=boardname).first_or_404()
     listx = List.query.filter_by(title=listname).first_or_404()
     card = Card.query.filter_by(name=cardname).first_or_404()
-    form=EditCardForm()
+    form = EditCardForm()
     if form.validate_on_submit():
         card.name = form.name.data
         card.desc = form.desc.data
@@ -242,7 +245,7 @@ def editcard(boardname, listname, cardname):
         card.priority = form.priority.data.upper()
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('showcard',boardname=board.name,listname=listx.title,cardname=card.name))
+        return redirect(url_for('showcard', boardname=board.name, listname=listx.title, cardname=card.name))
     elif request.method == 'GET':
         form.name.data = card.name
         form.desc.data = card.desc

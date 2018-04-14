@@ -13,7 +13,5 @@
 {% if user.about_me %}<p><h3>{{ user.about_me }}</h3></p>{% endif %}
 {% if user.last_seen %}<p>Last seen on:{{ user.last_seen }}</p>{%endif%}
 <hr>
-{% if user == current_user %}
-<p><a href="{{ url_for('edit_profile')}}"> Edit your profile</a></p>
-{% endif %}
+<p><a href="{{ url_for('searchuser',boardname = boardname)}}"> Back to User Search</a></p>
 {% endblock %}

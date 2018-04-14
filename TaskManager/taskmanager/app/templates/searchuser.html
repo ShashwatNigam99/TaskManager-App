@@ -6,7 +6,7 @@
   {{ form.hidden_tag() }}
   <p>
     <br>
-    {{ form.usersrch.label }}
+    <h2>{{ form.usersrch.label }}</h2>
     <br>
     {{ form.usersrch(size=50) }}
     <br>
@@ -16,4 +16,12 @@
   </p>
   <p>{{ form.submit() }}</p>
 </form>
+<hr>
+<h5><a href="{{url_for('showboard', boardname = boardname)}}"> --Go back to your Board</a></h5>
+<hr>
+{% for user in users %}
+<h3>{{ user[1] }}</h3>
+<h4>See Profile:<a href="{{url_for('user', username=user[2])}}">{{user[2]}}</a></h4>
+<hr>
+{% endfor %}
 {% endblock %}
