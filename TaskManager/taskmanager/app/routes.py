@@ -114,7 +114,7 @@ def edit_profile():
                            form=form)
 
 
-@app.route('/searchuser/<boardid>', methods=['GET', 'POST'])
+@app.route('/searchuser/<boardid>/', methods=['GET', 'POST'])
 @login_required
 def searchuser(boardid):
     conn = sqlite3.connect('app.db')
@@ -139,11 +139,21 @@ def searchuser(boardid):
     return render_template('searchuser.html', title='Search By Username', form=form, boardid=boardid, users=users)
 
 
-# @app.route('/seeuser/<boardname>/<username>/', methods=['GET', 'POST'])
-# @login_required
-# def seeuser(boardname, username):
-#    user = User.query.filter_by(username=username).first_or_404()
-#    return render_template('seeuser.html', user=user, boardname=boardname)
+@app.route('/adduser/<boardid>/<userid>/')
+@login_required
+def adduser(boardid, userid):
+    board = Board.query.filter_by(id=boardid).first_or_404()
+    user = User.query.filter_by(id=userid).first_or_404()
+    flag = -1
+    if user not in board.users:
+        flag = 1
+        board.users.append(user)
+        db.session.commit()
+    if flag == 1:
+        flash(user.username+' succesfully added !')
+    else:
+        flash('User already added to board')
+    return redirect(url_for('searchuser', boardid=boardid))
 
 
 @app.route('/newboard/', methods=['GET', 'POST'])
@@ -259,9 +269,10 @@ def editcard(boardid, listid, cardid):
     return render_template('editcard.html', title='Edit Card',
                            form=form)
 
+
 @app.route('/listoptions/<boardid>/<listid>/<cardid>/')
 @login_required
-def listoptions(boardid,listid,cardid):
+def listoptions(boardid, listid, cardid):
     board = Board.query.filter_by(id=boardid).first_or_404()
     listx = List.query.filter_by(id=listid).first_or_404()
     card = Card.query.filter_by(id=cardid).first_or_404()
@@ -270,15 +281,16 @@ def listoptions(boardid,listid,cardid):
     print(listx.title)
     return render_template('listoptions.html', board=board, list=listx, card=card)
 
+
 @app.route('/movecard/<boardid>/<listid1>/<listid2>/<cardid>/')
 @login_required
-def movecard(boardid,listid1,listid2,cardid):
+def movecard(boardid, listid1, listid2, cardid):
     board = Board.query.filter_by(id=boardid).first_or_404()
     listx1 = List.query.filter_by(id=listid1).first_or_404()
     listx2 = List.query.filter_by(id=listid2).first_or_404()
     card = Card.query.filter_by(id=cardid).first_or_404()
     cardx = Card(name=card.name, desc=card.desc,
-                timestart=card.timestart, deadline=card.deadline, list_id=listx2.id, priority=card.priority)
+                 timestart=card.timestart, deadline=card.deadline, list_id=listx2.id, priority=card.priority)
     listx1.cards.remove(card)
     db.session.delete(card)
     print(cardx.name)
@@ -286,4 +298,4 @@ def movecard(boardid,listid1,listid2,cardid):
     listx2.cards.append(cardx)
     db.session.add(cardx)
     db.session.commit()
-    return render_template('movecard.html',board=board,list1=listx1,list2=listx2,card=card)
+    return render_template('movecard.html', board=board, list1=listx1, list2=listx2, card=card)

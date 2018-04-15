@@ -22,7 +22,7 @@
 {% for user in users %}
 <h3>{{ user[1] }}</h3>
 <h4>See Profile:<a target="_blank" href="{{url_for('user',username=user[2])}}">{{user[2]}}</a></h4>
-<h4>Add User:<a href="{{url_for('adduser',boardname=boardname,username=user[2])}}"
+<h4>Add User:<a href="{{url_for('adduser',boardid=boardid,userid=user[0])}}">{{user[2]}}</a></h4>
 <hr>
 {% endfor %}
 {% endblock %}

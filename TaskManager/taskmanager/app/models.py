@@ -35,8 +35,11 @@ class User(UserMixin, db.Model):
 class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    lists = db.relationship('List', backref='board', cascade="all,delete", lazy='dynamic')
-    users = db.relationship('User', secondary=user_boards, cascade="all,delete", backref='boards')
+    lists = db.relationship('List', backref='board',
+                            cascade="all,delete", lazy='dynamic')
+    users = db.relationship('User', secondary=user_boards,
+                            cascade="all,delete", backref='boards')
+#cascade ="all,delete"
 
 
 class List(db.Model):
@@ -44,19 +47,20 @@ class List(db.Model):
     title = db.Column(db.String(30), nullable=False)
     board_id = db.Column(db.Integer, db.ForeignKey(
         'board.id'))  # foreign key from board
-    cards = db.relationship('Card', backref='list', cascade="all,delete", lazy='dynamic')
+    cards = db.relationship('Card', backref='list',
+                            cascade="all,delete", lazy='dynamic')
 
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     desc = db.Column(db.String(1600), nullable=False)
-    timestart = db.Column(db.Date, index=True, nullable=False, default=datetime.date(datetime.utcnow()))
+    timestart = db.Column(db.Date, index=True, nullable=False,
+                          default=datetime.date(datetime.utcnow()))
     deadline = db.Column(db.Date, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey(
         'list.id'))  # foreign key from list
-    priority = db.Column(db.String(5), nullable=False)    
-
+    priority = db.Column(db.String(5), nullable=False)
 
 
 @login.user_loader
