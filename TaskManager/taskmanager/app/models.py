@@ -37,8 +37,7 @@ class Board(db.Model):
     name = db.Column(db.String(50), nullable=False)
     lists = db.relationship('List', backref='board',
                             cascade="all,delete", lazy='dynamic')
-    users = db.relationship('User', secondary=user_boards,
-                            cascade="all,delete", backref='boards')
+    users = db.relationship('User', secondary=user_boards, backref='boards')
 #cascade ="all,delete"
 
 
