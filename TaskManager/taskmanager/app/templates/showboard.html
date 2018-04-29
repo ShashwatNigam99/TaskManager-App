@@ -4,16 +4,16 @@
 <br>
 <h2> Board: {{ board.name }}</h2>
 <br>
-<h5><a href="{{ url_for('index')}}"> --Go back to your Boards</a></h5>
+<h3><a href="{{ url_for('index')}}"> --Go back to your Boards</a></h3>
 <h3><a href="{{ url_for('searchuser',boardid = board.id )}}">Click here to search for a user</a></h3>
 <br>
 {% for list in board.lists %}
 <p>
-<h3><a href="{{ url_for('showlist',boardid = board.id, listid = list.id) }}">{{ list.title }}</a></h3>
-<h5><a href="{{url_for('deletelist', boardid=board.id, listid=list.id) }}"> Delete List </a></h5>
+<h2><a href="{{ url_for('showlist',boardid = board.id, listid = list.id) }}">{{ list.title }}</a></h2>
+<h3><a href="{{url_for('deletelist', boardid=board.id, listid=list.id) }}"> Delete List </a></h3>
 </p>
 <br>
 {% endfor %}
-<h5><a href="{{url_for('newlist',boardid = board.id )}}">Click here to create a new list</a></h5>
+<h3><a href="{{url_for('newlist',boardid = board.id )}}">Click here to create a new list</a></h3>
 
 {% endblock %}

@@ -28,7 +28,7 @@
    <p>
    <h3><a href="{{ url_for('showcard', boardid=board.id , listid=list.id, cardid = card.id) }}">TASK:{{ card.name }}</a><br>
      <h4>Deadline: {{card.deadline}}</h4>
-     <h3 style="color:red;">Priority: {{card.priority }}</h3>
+     <h3 style="color:yellow;">Priority: {{card.priority }}</h3>
 
      <p>
        <h5><a href="{{url_for('deletecard', boardid=board.id, listid=list.id, cardid=card.id) }}"> Delete Card </a></h5>
@@ -44,7 +44,7 @@
   <p>
   <h3><a href="{{ url_for('showcard', boardid=board.id , listid=list.id, cardid = card.id) }}">TASK:{{ card.name }}</a><br>
     <h4>Deadline: {{card.deadline}}</h4>
-    <h3 style="color:red;">Priority: {{card.priority }}</h3>
+    <h3 style="color:green;">Priority: {{card.priority }}</h3>
 
     <p>
       <h5><a href="{{url_for('deletecard', boardid=board.id, listid=list.id, cardid=card.id) }}"> Delete Card </a></h5>
