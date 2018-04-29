@@ -2,9 +2,9 @@
 
 {% block content %}
   <h1>Hi, {{ current_user.username }}!</h1>
-  <hr>
+  <br>
   <h2>Your Boards: </h2>
-  <hr>
+  <br>
   {% for board in current_user.boards %}
   <p>
     <h3>
@@ -12,7 +12,7 @@
     </h3>
     <h5><a href="{{url_for('deleteboard', boardid = board.id) }}"> Delete Board </a></h5>
   </p>
-  <hr>
+  
   {% endfor %}
   <h5><a href="{{url_for('newboard')}}">Click here to create a new board</a></h5>
 {% endblock %}

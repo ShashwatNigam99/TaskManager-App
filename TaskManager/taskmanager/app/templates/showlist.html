@@ -5,7 +5,7 @@
 <h1> List: {{ list.title }}</h1>
 <br>
 <h5><a href="{{url_for('showboard', boardid = board.id)}}"> --Go back to your Lists</a></h5>
-<hr>
+<br>
 
 {% for card in list.cards %}
 {% if card.priority == "HIGH" %}
@@ -20,7 +20,6 @@
   </p>
 </h3>
 </p>
-<hr>
 {% endif %}
 {% endfor %}
 
@@ -37,7 +36,6 @@
      </p>
    </h3>
    </p>
-   <hr>
 {% endif %}
 {% endfor %}
 
@@ -54,10 +52,9 @@
     </p>
   </h3>
   </p>
-  <hr>
 {% endif %}
 {% endfor %}
-
+<br>
 <h5><a href="{{url_for('newcard', boardid = board.id , listid = list.id )}}"> Click here to create a new card</a></h5>
-<hr>
+
 {% endblock %}

@@ -1,9 +1,7 @@
-social media login
-move tasks from one list to another
-tag tasks as complete incomplete active
+social media login---naah
+!!!!!!!!!!!!!!!  tag tasks as complete incomplete active
 assign tasks to people that are on the board
-add people to boards!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-showprofile bug
 datetime bug
+
 access levels
 task dependency

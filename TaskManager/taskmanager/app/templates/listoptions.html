@@ -2,9 +2,9 @@
 
 {% block content%}
   <h2>Choose List:</h2>
-  <hr>
+  <br>
   {% for listx in board.lists%}
     <h3><a href="{{url_for('movecard',boardid=board.id,listid1=list.id,listid2=listx.id,cardid=card.id)}}">Move to {{ listx.title }}</h3>
-    <hr>
+    
   {% endfor %}
 {% endblock %}
