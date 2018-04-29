@@ -22,5 +22,11 @@ pip install flask-sqlalchemy
 Flask-Migrate:
 pip install flask-migrate
 
+Flask-Bootstrap:
+pip install flask-bootstrap
 
+Flask-Mail:
+pip install flask-mail
 
+For JSON Web Tokens:
+pip install pyjwt

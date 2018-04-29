@@ -47,9 +47,7 @@
       {% if messages %}
         <ul>
         {% for message in messages %}
-        <li>
-          {{message}}
-        </li>
+        <div class="alert alert-info" id="alertbar" role="alert">{{ message }}</div>      
         {% endfor %}
         </ul>
       {% endif %}

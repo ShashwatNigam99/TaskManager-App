@@ -36,3 +36,10 @@ padding-left: 3em;
 br{
   line-height: 1em;
 }
+
+#alertbar{
+  color:rgb(150,150,150);
+  margin-bottom: 1em;
+  background-color: rgb(50,50,50);
+  margin-right: 5em;
+}

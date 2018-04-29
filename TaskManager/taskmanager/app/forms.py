@@ -79,3 +79,13 @@ class EditCardForm(FlaskForm):
     def validate_priority(self,priority):
         if priority.data.lower() != 'low' and priority.data.lower() != 'medium' and priority.data.lower() != 'high':
             raise ValidationError('Invalid Priority')
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Password Reset')
