@@ -3,6 +3,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+
+    """Defines all configuration variables used throughout"""
+
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
@@ -11,6 +14,7 @@ class Config(object):
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USE_SSl = False
+    # The email used for passoword change/verification purpose
     MAIL_USERNAME = "taskmanager205@gmail.com"
     MAIL_PASSWORD = "bakul205"
     ADMINS = ['taskmanager205@gmail.com', 'mehershashwat@gmail.com']

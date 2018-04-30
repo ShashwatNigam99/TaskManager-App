@@ -1,7 +1,0 @@
-social media login---naah
-!!!!!!!!!!!!!!!  tag tasks as complete incomplete active
-assign tasks to people that are on the board
-datetime bug
-
-access levels
-task dependency

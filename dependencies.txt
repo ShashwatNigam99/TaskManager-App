@@ -19,6 +19,7 @@ pip install flask-wtf
 Flask-Sqlalchemy:
 pip install flask-sqlalchemy
 
+#Used for making database changes
 Flask-Migrate:
 pip install flask-migrate
 

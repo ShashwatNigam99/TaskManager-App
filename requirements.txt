@@ -1,0 +1,7 @@
+autopep8==1.2.1
+Flask==0.10.1
+Flask-SQLAlchemy==2.0
+Jinja2==2.8
+pep8==1.6.2
+SQLAlchemy==1.0.8
+Werkzeug==0.10.4

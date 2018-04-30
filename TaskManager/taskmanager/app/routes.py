@@ -7,7 +7,8 @@ from app.models import User, Board, List, Card
 from werkzeug.urls import url_parse
 from datetime import datetime
 import sqlite3
-# if you import forms in init then no need to write app.forms check this out
+
+# Different routes used throughout the project
 
 
 @app.route('/')

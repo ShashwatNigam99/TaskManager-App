@@ -8,6 +8,7 @@ import jwt
 from app import app
 from time import time
 
+# The following is basically a helper table for a many to many relationship between users and boards
 user_boards = db.Table('user_boards',
                        db.Column('user_id', db.Integer,
                                  db.ForeignKey('user.id')),
@@ -15,6 +16,8 @@ user_boards = db.Table('user_boards',
 
 
 class User(UserMixin, db.Model):
+    """The base class for any user registered in the app"""
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     username = db.Column(db.String(64), index=True,
@@ -35,27 +38,29 @@ class User(UserMixin, db.Model):
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
 
     def get_reset_password_token(self, expires_in=600):
-        return jwt.encode({'reset_password':self.id, 'exp': time() + expires_in}, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+        return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in}, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
+            id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=[
+                            'HS256'])['reset_password']
         except:
             return
         return User.query.get(id)
 
 
 class Board(db.Model):
+    """The base class of a board that can be created by any user"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     lists = db.relationship('List', backref='board',
                             cascade="all,delete", lazy='dynamic')
     users = db.relationship('User', secondary=user_boards, backref='boards')
-#cascade ="all,delete"
 
 
 class List(db.Model):
+    """Base class for any list that can be create inside any board"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), nullable=False)
     board_id = db.Column(db.Integer, db.ForeignKey(
@@ -65,6 +70,7 @@ class List(db.Model):
 
 
 class Card(db.Model):
+    """Database model for a task/card that can be created inside any list"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     desc = db.Column(db.String(1600), nullable=False)
